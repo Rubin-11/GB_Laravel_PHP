@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css"/>
     <title>Новости</title>
@@ -14,10 +14,17 @@
     </ul>
 </nav>
 <body>
-<h1>{{$news['title']}}</h1>
-<p>{{$news['content']}}</p>
+<h1>Новости категории {{$categories['name']}}</h1>
+<p>Это страница с новостями выбранной категории.</p>
 
-
+<ul>
+    @foreach($result as $item)
+        <li>
+            <h2><a href="{{ route('news', ['id' => $item['id']]) }}"> {{ $item['title'] }}</a></h2>
+            <p>{{ $item['content'] }}</p>
+        </li>
+    @endforeach
+</ul>
 
 </body>
 </html>

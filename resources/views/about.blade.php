@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>About</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css"/>
+    <title>Новости определенной категории</title>
 </head>
 <nav>
-    <ul>
+    <ul class="nav_header">
         <li><a href="/">Главная</a></li>
         <li><a href="/about">О проекте</a></li>
         <li><a href="/news">Новости</a></li>
+        <li><a href="/authorization_page">Авторизация</a></li>
+        <li><a href="/addingNews">Добавить новость</a></li>
     </ul>
 </nav>
 <body>
