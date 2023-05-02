@@ -121,16 +121,19 @@
                 </div>
             </div>
 
-            <h2>Агрегатор новостей</h2>
+            <h2>Авторизация</h2>
             <div class="table-responsive">
-
-                <p>Наш агрегатор новостей предоставляет возможность получать актуальную информацию из
-                    различных источников в одном месте. Мы собираем новости со всего мира и предоставляем
-                    их в удобном формате для наших пользователей.</p>
-                <p>С нашим агрегатором вы можете быть уверены, что не пропустите ни одной важной новости.
-                    Мы следим за событиями в реальном времени и обновляем информацию на сайте мгновенно.</p>
-                <p>Присоединяйтесь к нашему сообществу и будьте в курсе всех событий!</p>
+                <form action="login.php" method="post">
+                    <label for="login">Логин:</label>
+                    <input type="text" id="login" name="login"><br><br>
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <label for="remember">Запомнить меня:</label>
+                    <input type="checkbox" id="remember" name="remember"><br><br>
+                    <input type="submit" value="Войти">
+                </form>
             </div>
+
         </main>
     </div>
 </div>
