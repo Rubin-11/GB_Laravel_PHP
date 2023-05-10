@@ -113,15 +113,14 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
 
-        <h2>Новости категории {{$categories['name']}}</h2>
+        <h2>Новости категории {{$categories->name}}</h2>
         <div class="table-responsive">
             <p>Это страница с новостями выбранной категории.</p>
 
             <ul>
                 @foreach($result as $item)
                     <li>
-                        <h2><a href="{{ route('news', ['id' => $item['id']]) }}"> {{ $item['title'] }}</a></h2>
-                        <p>{{ $item['content'] }}</p>
+                        <h2><a href="{{ route('news', ['id' => $item->id]) }}"> {{ $item->title }}</a></h2>
                     </li>
                 @endforeach
             </ul>

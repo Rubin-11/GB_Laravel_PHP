@@ -117,7 +117,7 @@
                 <ul>
                     @foreach($categories as $category)
                         <li>
-                            <a href="{{ route('news_categories', ['id' => $category['id']]) }}">{{ $category['name'] }}</a>
+                            <a href="{{ route('news_categories', ['id' => $category->id]) }}">{{ $category->name }}</a>
                         </li>
                     @endforeach
                 </ul>

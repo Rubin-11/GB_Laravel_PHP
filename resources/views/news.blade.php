@@ -111,9 +111,10 @@
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-            <h2>{{$news['title']}}</h2>
+            <h2>{{$news->title}}</h2>
             <div class="table-responsive">
-                <p>{{$news['content']}}</p>
+                <p>{{$news->text}}</p>
+                <p>Источник новостей - {{$sources->name}}</p>
             </div>
 
         </main>
