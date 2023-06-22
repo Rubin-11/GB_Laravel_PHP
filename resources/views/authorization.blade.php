@@ -30,7 +30,7 @@
             <div class="position-sticky pt-3 sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{route('welcome')}}">
+                        <a class="nav-link active" aria-current="page" href="{{route('allNews')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-home align-text-bottom"
@@ -103,7 +103,7 @@
                                 <line x1="12" y1="20" x2="12" y2="4"></line>
                                 <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
-                            Заказ на новость
+                            Заказать новость
                         </a>
                     </li>
                 </ul>
@@ -115,14 +115,15 @@
                 <h2 class="text-center">Авторизация</h2>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form action="login.php" method="post">
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label for="login">Логин:</label>
-                                <input type="text" class="form-control" id="login" name="login">
+                                <input type="text" class="form-control" id="login" name="login" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Пароль:</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" id="remember" name="remember">

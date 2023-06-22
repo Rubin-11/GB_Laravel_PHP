@@ -32,7 +32,7 @@ class NewsSeeder extends Seeder
                 'source_id' => $faker->randomElement($sources),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+        ]);
         }
     }
 }
