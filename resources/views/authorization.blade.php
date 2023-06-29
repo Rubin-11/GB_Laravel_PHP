@@ -118,6 +118,13 @@
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="form-group">
+                                @if($errors->has('login'))
+                                    <div class="alert alert-danger">
+                                        @foreach($errors->get('login') as $error)
+                                            <p style="margin-bottom: 0;">{{ $error }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
                                 <label for="login">Логин:</label>
                                 <input type="text" class="form-control" id="login" name="login" required>
                             </div>

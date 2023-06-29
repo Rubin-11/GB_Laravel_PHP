@@ -117,18 +117,46 @@
                 <form method="post" action="{{ route('order.store') }}">
                     @csrf
                     <div class="form-group">
+                        @if($errors->has('name'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('name') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="name">Имя заказчика:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                     </div>
                     <div class="form-group">
+                        @if($errors->has('phone'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('phone') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="phone">Номер телефона:</label>
                         <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone')}}"></input>
                     </div>
                     <div class="form-group">
+                        @if($errors->has('email'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('email') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}"></input>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ">
+                        @if($errors->has('info'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('info') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="info">Информация о заказе:</label>
                         <textarea class="form-control" id="info" name="info">{{old('info')}}</textarea>
                     </div>

@@ -39,4 +39,20 @@ class News extends Model
     {
         return $this->belongsTo(Source::class, 'source_id', 'id');
     }
+
+    public static function rules()
+    {
+        return [
+            'title' => ['required', 'max:255'],
+            'text' => ['required']
+        ];
+    }
+
+    public static function attributeName()
+    {
+        return [
+            'title' => 'Название новости',
+            'text' => 'Текст новости'
+        ];
+    }
 }

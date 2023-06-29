@@ -3,34 +3,38 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddNewsRequest;
+use App\Http\Requests\StoreFeedbackRequest;
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\News;
 use App\Models\OrderNews;
 use App\Models\Source;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class NewsController extends Controller
 {
     private $category;
     private $news;
     private $source;
-    private $user;
     private $comment;
     private $orderNews;
 
-    public function __construct(Category $category, News $news, Source $source, User $user, Comment $comment, OrderNews $orderNews)
+    public function __construct(Category $category, News $news, Source $source, Comment $comment, OrderNews $orderNews)
     {
         $this->category = $category;
         $this->news = $news;
         $this->source = $source;
-        $this->user = $user;
         $this->comment = $comment;
         $this->orderNews = $orderNews;
     }
-
-    // Авторизация пользователей
 
     //Вывод всех новостей по категориям
     public function news($id = null)
@@ -52,7 +56,6 @@ class NewsController extends Controller
         return view('news', ['news' => $news, 'sources' => $source]);
     }
 
-
     public function feedbackNews()
     {
         return view('feedback');
@@ -62,17 +65,12 @@ class NewsController extends Controller
     public function orderNews()
     {
         return view('orderNews');
-
     }
 
     // Для формы обратной связи
-    public function storeFeedback(Request $request)
+    public function storeFeedback(StoreFeedbackRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'comment' => 'required|string|max:1000',
-        ]);
-
+//        dd('=');
         $this->comment::create([
             'name' => $request->input('name'),
             'comment' => $request->input('comment'),
@@ -82,15 +80,8 @@ class NewsController extends Controller
     }
 
     // Для формы заказа на получение выгрузки данных
-    public function storeOrder(Request $request)
+    public function storeOrder(StoreOrderRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'info' => 'required|string|max:1000',
-        ]);
-
         $this->orderNews::create([
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
@@ -98,6 +89,7 @@ class NewsController extends Controller
             'order_information' => $request->input('info'),
             'created_at' => now(),
         ]);
+
         return redirect()->back()->with('success', 'Ваш заказ успешно оформлен!');
     }
 
@@ -109,15 +101,23 @@ class NewsController extends Controller
 
     public function addNews(Request $request)
     {
+        $news = $this->news;
+
         if ($request->isMethod('post')) {
-            $this->news->fill($request->all());
-            $this->news->publication_date = now();
-            $this->news->save();
-            return redirect()->route('admin/allNews');
+            $this->validate($request, News::rules(), [], News::attributeName());
+            $news->fill($request->all());
+            $news->publication_date = now();
+            $news->save();
+            return redirect()->route('allNews');
         }
+
+        if (!empty($request->old())) {
+            $news->fill($request->old());
+        }
+
         return view('admin/addNews', [
             'categories' => $this->category->all(),
-            'news' => $this->news,
+            'news' => $news,
             'rout' => 'addNews',
             'title' => 'Добавление новости',
         ]);
@@ -126,11 +126,13 @@ class NewsController extends Controller
     public function updateNews(Request $request, News $news)
     {
         if ($request->isMethod('post')) {
+            $this->validate($request, News::rules(), [], News::attributeName());
             $news->fill($request->all());
             $this->news->updated_at = now();
             $news->save();
-            return redirect()->route('admin/allNews');
+            return redirect()->route('allNews');
         }
+
         return view('admin/addNews', [
             'categories' => $this->category->all(),
             'news' => $news,
@@ -142,6 +144,6 @@ class NewsController extends Controller
     public function deleteNews(News $news)
     {
         $news->delete();
-        return redirect()->route('admin/allNews');
+        return redirect()->route('allNews');
     }
 }

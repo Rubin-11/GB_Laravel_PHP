@@ -117,10 +117,24 @@
                 <form action="{{ route('feedback.store') }}" method="post">
                     @csrf
                     <div class="form-group">
+                        @if($errors->has('name'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('name') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="name">Имя:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                     </div>
                     <div class="form-group">
+                        @if($errors->has('comment'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('comment') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <label for="comment">Комментарий/отзыв:</label>
                         <textarea class="form-control" id="comment" name="comment">{{old('comment')}}</textarea>
                     </div>
