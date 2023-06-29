@@ -109,23 +109,39 @@
                 </ul>
             </div>
         </nav>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <h2>Агрегатор новостей</h2>
-            <div class="table-responsive">
-                <p>Наш агрегатор новостей предоставляет возможность получать актуальную информацию из
-                    различных источников в одном месте. Мы собираем новости со всего мира и предоставляем
-                    их в удобном формате для наших пользователей.</p>
-                <p>С нашим агрегатором вы можете быть уверены, что не пропустите ни одной важной новости.
-                    Мы следим за событиями в реальном времени и обновляем информацию на сайте мгновенно.</p>
-                <p>Присоединяйтесь к нашему сообществу и будьте в курсе всех событий!</p>
-            </div>
-{{--            <div>--}}
-{{--                @yield('addNews')--}}
-{{--            </div>--}}
 
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="container">
-                @yield('allNews')
+                <h2 class="text-center">Авторизация</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                @if($errors->has('login'))
+                                    <div class="alert alert-danger">
+                                        @foreach($errors->get('login') as $error)
+                                            <p style="margin-bottom: 0;">{{ $error }}</p>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                <label for="login">Логин:</label>
+                                <input type="text" class="form-control" id="login" name="login" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Пароль:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">Запомнить меня</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </form>
+                    </div>
+                </div>
             </div>
+
         </main>
     </div>
 </div>

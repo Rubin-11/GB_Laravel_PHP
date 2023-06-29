@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{{--@extends('welcome')--}}
+
+{{--@section('addNews')--}}
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -110,23 +113,55 @@
             </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <h2>Агрегатор новостей</h2>
-            <div class="table-responsive">
-                <p>Наш агрегатор новостей предоставляет возможность получать актуальную информацию из
-                    различных источников в одном месте. Мы собираем новости со всего мира и предоставляем
-                    их в удобном формате для наших пользователей.</p>
-                <p>С нашим агрегатором вы можете быть уверены, что не пропустите ни одной важной новости.
-                    Мы следим за событиями в реальном времени и обновляем информацию на сайте мгновенно.</p>
-                <p>Присоединяйтесь к нашему сообществу и будьте в курсе всех событий!</p>
-            </div>
-{{--            <div>--}}
-{{--                @yield('addNews')--}}
-{{--            </div>--}}
+            <form action="{{route($rout, $news->id)}}" method="post">
+                @csrf
+                <div class="input-group mb-3">
+                    <select name="category_id" class="form-select" aria-label="Default select example">
+                        @forelse($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @empty
+                            <p>Нет новостей</p>
+                        @endforelse
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    @if($errors->has('title'))
+                        <div class="alert alert-danger">
+                            @foreach($errors->get('title') as $error)
+                                <p style="margin-bottom: 0;">{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
 
-            <div class="container">
-                @yield('allNews')
-            </div>
+                    <input name="title" type="text" class="form-control" placeholder="Название новости"
+                           value="{{$news->title}}"
+                           aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="form-group mb-3">
+                    @if($errors->has('text'))
+                        <div class="alert alert-danger">
+                            @foreach($errors->get('text') as $error)
+                                <p style="margin-bottom: 0;">{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+                    <label for="exampleFormControlTextarea1" class="form-label">Текст новости</label>
+                    <textarea name="text" class="form-control" id="exampleFormControlTextarea1"
+                              rows="3">{{$news->text}}</textarea>
+                </div>
+                <button class="form-control" type="submit">
+                    @if ($news->id)
+                        Изменить
+                    @else
+                        Добавить
+                    @endif
+                </button>
+            </form>
         </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                crossorigin="anonymous"></script>
     </div>
 </div>
 
@@ -135,3 +170,5 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 </html>
+{{--@endsection--}}
+
