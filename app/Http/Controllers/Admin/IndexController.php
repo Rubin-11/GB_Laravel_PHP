@@ -7,13 +7,8 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public  function  index()
+    public  function  adminMain()
     {
-        return <<<php
-        <h1>Точка входа для админа</h1>
-        Тут какой-то текст<br>
-        <a href="/">Переход на главную страницу</a>
-php;
-
+        return view('admin/admin');
     }
 }

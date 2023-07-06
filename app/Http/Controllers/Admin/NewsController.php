@@ -107,6 +107,7 @@ class NewsController extends Controller
             $this->validate($request, News::rules(), [], News::attributeName());
             $news->fill($request->all());
             $news->publication_date = now();
+//            dd($news);
             $news->save();
             return redirect()->route('allNews');
         }
@@ -117,6 +118,7 @@ class NewsController extends Controller
 
         return view('admin/addNews', [
             'categories' => $this->category->all(),
+            'sources' => $this->source->all(),
             'news' => $news,
             'rout' => 'addNews',
             'title' => 'Добавление новости',
@@ -135,6 +137,7 @@ class NewsController extends Controller
 
         return view('admin/addNews', [
             'categories' => $this->category->all(),
+            'sources' => $this->source->all(),
             'news' => $news,
             'rout' => 'updateNews',
             'title' => 'Изменение новости',

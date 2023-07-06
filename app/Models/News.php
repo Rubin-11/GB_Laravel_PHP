@@ -20,7 +20,7 @@ class News extends Model
 
     protected $table = "news";
     public $timestamps = false;
-    protected $fillable = ['title', 'text', 'category_id'];
+    protected $fillable = ['title', 'text', 'category_id', 'source_id'];
 
     //Связь с таблицей category
 
