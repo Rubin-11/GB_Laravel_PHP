@@ -1,18 +1,44 @@
 <?php
 
+use App\Http\Controllers\Admin\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Admin\NewsController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [WelcomeController::class, 'welcome'])
+        ->name('welcome');
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect()->route('login');
+    })->name('account.logout');
+    Route::prefix('news')->group(function () {
+        Route::get('/{id?}', [NewsController::class, 'news'])
+            ->name('news_categories');
+        Route::get('/categories/{id?}', [NewsController::class, 'newsItem'])->name('news');
+    });
+    Route::match(['get', 'post'], '/orderNews', [NewsController::class, 'orderNews'])
+        ->name('orderNews');
+    Route::match(['get', 'post'], '/feedback', [NewsController::class, 'feedbackNews'])
+        ->name('feedbackNews');
+    Route::match(['get', 'post'], '/feedback/store', [NewsController::class, 'storeFeedback'])
+        ->name('storeFeedback');
+    Route::match(['get', 'post'], '/order/store', [NewsController::class, 'storeOrder'])
+        ->name('order.store');
+
+    Route::prefix('admin')->middleware('admin')->group(function () {
+        Route::match(['get', 'post'], '/allNews', [NewsController::class, 'allNews'])
+            ->name('allNews');
+        Route::match(['get', 'post'], '/updateNews/{news}', [NewsController::class, 'updateNews'])
+            ->name('updateNews');
+        Route::match(['get', 'post'], '/deleteNews/{news}', [NewsController::class, 'deleteNews'])
+            ->name('deleteNews');
+        Route::match(['get', 'post'], '/addNews', [NewsController::class, 'addNews'])
+            ->name('addNews');
+        Route::match(['get', 'post'], '/profile', [ProfileController::class, 'update'])
+            ->name('updateProfile');
+    });
 });
