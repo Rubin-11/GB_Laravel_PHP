@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\AuthService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(AuthService::class, function () {
+            return new AuthService();
+        });
     }
 
     /**
@@ -19,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrapFive();
+        Paginator::useBootstrapFour();
     }
 }
