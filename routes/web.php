@@ -8,6 +8,16 @@ use App\Http\Controllers\Admin\NewsController;
 
 Auth::routes();
 
+Route::get('/auth/vk',[\App\Http\Controllers\SocialVKController::class, 'loginVK'])
+    ->name('vkLogin');
+Route::get('/auth/vk/response',[\App\Http\Controllers\SocialVKController::class, 'responseVK'])
+    ->name('vkResponse');
+
+Route::get('/auth/ok',[\App\Http\Controllers\SocialOKController::class, 'loginOK'])
+    ->name('okLogin');
+Route::get('/auth/ok/response',[\App\Http\Controllers\SocialOKController::class, 'responseOK'])
+    ->name('okResponse');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [WelcomeController::class, 'welcome'])
         ->name('welcome');
@@ -40,5 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('addNews');
         Route::match(['get', 'post'], '/profile', [ProfileController::class, 'update'])
             ->name('updateProfile');
+
+        Route::get('/parser', [\App\Http\Controllers\Admin\ParserController::class, 'index'])
+        ->name('parser');
     });
 });

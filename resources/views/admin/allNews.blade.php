@@ -2,6 +2,7 @@
 
 @section('allNews')
     <h1>Новости</h1>
+    <a href="{{route('parser')}}">Загрузить новости</a>
     @forelse($news as $item)
         <h2>{{$item->title}}</h2>
         <a href="{{route('deleteNews', $item->id)}}">Удалить</a>

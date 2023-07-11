@@ -37,6 +37,8 @@
                                     </span>
                                 @enderror
                             </div>
+                            <a href="{{route('vkLogin')}}">Войти через VK</a>
+                            <a href="{{route('okLogin')}}">Войти через OK</a>
                         </div>
 
                         <div class="row mb-3">

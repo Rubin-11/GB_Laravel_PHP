@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
  *
  * @property string title
  * @property string text
+ * @property string created_at
+ * @property int category_id
  */
 class News extends Model
 {
@@ -20,7 +22,7 @@ class News extends Model
 
     protected $table = "news";
     public $timestamps = false;
-    protected $fillable = ['title', 'text', 'category_id', 'source_id'];
+    protected $fillable = ['title', 'text', 'category_id', 'created_at'];
 
     //Связь с таблицей category
 
